@@ -7,24 +7,36 @@ import "./Blog.css";
 import axios from "axios";
 
 class Blog extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.data = [];
-//   }
+  //   constructor(props) {
+  //     super(props);
+  //     this.data = [];
+  //   }
+
+  state = {
+    posts: []
+  }
 
   componentDidMount() {
     axios.get("https://jsonplaceholder.typicode.com/posts").then((response) => {
       console.log(response);
+      this.setState({
+        posts: response.data.slice(0, 4).map(i => {
+          return {
+            ...i,
+            author: "Sruba"
+          }
+        })
+      });
     });
   }
 
   render() {
+    const posts = this.state.posts.map(i => <Post key={i.id} title={i.title} author={i.author} />);
+
     return (
       <div>
         <section className="Posts">
-          <Post />
-          <Post />
-          <Post />
+          {posts}
         </section>
         <section>
           <FullPost />
