@@ -7,13 +7,9 @@ import "./Blog.css";
 import axios from "axios";
 
 class Blog extends Component {
-  //   constructor(props) {
-  //     super(props);
-  //     this.data = [];
-  //   }
-
   state = {
-    posts: []
+    posts: [],
+    selectedPostId: null
   }
 
   componentDidMount() {
@@ -30,8 +26,13 @@ class Blog extends Component {
     });
   }
 
+  postClickHandler = (id) => {
+    this.setState({ selectedPostId: id });
+  }
+
   render() {
-    const posts = this.state.posts.map(i => <Post key={i.id} title={i.title} author={i.author} />);
+    const posts = this.state.posts.map(i =>
+      <Post key={i.id} title={i.title} author={i.author} postClickHandler={() => this.postClickHandler(i.id)} />);
 
     return (
       <div>
@@ -39,12 +40,11 @@ class Blog extends Component {
           {posts}
         </section>
         <section>
-          <FullPost />
+          <FullPost selectedPost={this.state.posts.find(i => i.id === this.state.selectedPostId)} />
         </section>
         <section>
           <NewPost />
         </section>
-        {/* {JSON.stringify(this.data)} */}
       </div>
     );
   }
