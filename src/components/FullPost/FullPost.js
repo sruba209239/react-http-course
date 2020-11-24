@@ -8,6 +8,16 @@ class FullPost extends Component {
     loadedPost: null,
   };
 
+  deletePost = () => {
+    axios
+      .delete(
+        "https://jsonplaceholder.typicode.com/posts/" + this.state.loadedPost.id
+      )
+      .then((response) => {
+        console.log(response);
+      });
+  };
+
   componentDidUpdate() {
     if (
       this.props.id &&
@@ -34,7 +44,7 @@ class FullPost extends Component {
           <h1>{this.state.loadedPost.title}</h1>
           <p>{this.state.loadedPost.body}</p>
           <div className="Edit">
-            <button className="Delete" onClick={this.props.deletePost}>
+            <button className="Delete" onClick={this.deletePost}>
               Delete
             </button>
           </div>

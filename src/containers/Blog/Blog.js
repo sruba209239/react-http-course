@@ -30,19 +30,6 @@ class Blog extends Component {
     this.setState({ selectedPostId: id });
   };
 
-  deletePost = () => {
-    this.setState((prevState) => {
-      prevState.posts.splice(
-        prevState.posts.findIndex((i) => i.id === prevState.selectedPostId),
-        1
-      );
-      return {
-        selectedPostId: null,
-        posts: prevState.posts,
-      };
-    });
-  };
-
   render() {
     const posts = this.state.posts.map((i) => (
       <Post
@@ -59,7 +46,6 @@ class Blog extends Component {
         <section>
           <FullPost
             id={this.state.selectedPostId}
-            deletePost={this.deletePost}
             selectedPost={this.state.posts.find(
               (i) => i.id === this.state.selectedPostId
             )}
